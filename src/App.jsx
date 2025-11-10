@@ -9,6 +9,9 @@ function App() {
   const [error, setError] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
+  // ✅ Load backend base URL from .env
+  const API_BASE = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -23,7 +26,8 @@ function App() {
     }
 
     try {
-      const response = await axios.post("/api/url/shorten", { originalUrl });
+      // ✅ Full API call using env variable
+      const response = await axios.post(`${API_BASE}/api/url/shorten`, { originalUrl });
       setShortUrl(response.data.shortUrl);
       setOriginalUrl("");
     } catch (err) {
@@ -54,7 +58,7 @@ function App() {
           <h1>Make your URL easy to share</h1>
           <p>
             Shortening your URL makes it easier to share on social media,
-            email, text messages and more. Try it out below!
+            email, text messages, and more. Try it out below!
           </p>
         </div>
         <div className="hero-img"></div>
@@ -73,6 +77,7 @@ function App() {
             {loading ? "Shortening..." : "Shorten it!"}
           </button>
         </form>
+
         {error && <p className="error-text">⚠️ {error}</p>}
 
         {shortUrl && (
@@ -101,7 +106,7 @@ function App() {
 
       {/* Footer */}
       <footer className="footer">
-        <p>Shorten your link now @ 2025</p>
+        <p>Shorten your link now © 2025</p>
         <button className="footer-btn">Aftab Alam</button>
       </footer>
     </div>
